@@ -1,8 +1,13 @@
-import './App.css';
+import LoginScreen from './ScreensAndComponents/LoginScreen';
+import {BrowserRouter,Route} from 'react-router-dom';
 function App() {
+  
   return (
-    <div className="App">
-     </div>
+    <BrowserRouter>
+    <main>
+    <Route path='/' component={LoginScreen}></Route>
+    </main>
+    </BrowserRouter>
   );
 }
 
