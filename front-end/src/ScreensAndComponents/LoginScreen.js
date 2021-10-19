@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import WhiteTemplate from './WhiteTemplate.js';
 import Ficon from "@material-ui/icons/FilterVintageTwoTone";
-
+import {Link} from 'react-router-dom';
 function LoginScreen()
 {
      
@@ -12,7 +12,7 @@ function LoginScreen()
              <div style={{backgroundColor:'#FFE4B5',height:'4rem',display:'flex',flexDirection:'row',justifyContent:'space-between',padding:'0.5rem'}}>
                      <div style={{display:'flex', flexDirection:'row', justifyContent:'left',marginTop:'0.5rem'}}>
                          <div><Ficon style={{color:'#0066b2',fontSize:"3.2rem"}} /></div>
-                         <div style={{fontSize:'3.2rem'}}><b>PairUp</b></div>
+                         <div><b><Link to='/' style={{color:'black',fontSize:'3.2rem'}}>PairUp</Link></b></div>
                      </div>
                      <div>
                          <button style={{marginTop:'1rem',marginleft:'1rem',height:'2rem',width:'8rem'}} onClick={()=>{set_a(2)}}>Login</button>

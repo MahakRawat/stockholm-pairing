@@ -4,6 +4,7 @@ import cors from 'cors';
 import cli from 'twilio';
 import multer from 'multer';
 import userModel from './userModel.js';
+import Axios from 'axios';
 
 const upload= multer({dest:'./uploads'});
 
@@ -47,15 +48,22 @@ app.post('/register',upload.array("images",7),async (req,res)=>{
     req.files.forEach((x)=>{
         images.push('http://localhost:4000/'+x.path);
     })
+    const url='https://api.mapbox.com/geocoding/v5/mapbox.places/'+encodeURI(req.body.address)+'.json?access_token=pk.eyJ1IjoibWFoYWstcmF3YXQiLCJhIjoiY2tra3FpZjN1MDNoMjJ3bG9sdDdhdTY0ayJ9.zaTDuw_EF0IjEd3e8jwiQQ&limit=1'
+     await Axios.get(url)
+     .then(({data})=>{console.log(data);req.body.location= {longitude:data.features[0].center[0],latitude: data.features[0].center[1]}})
+     .catch((err)=>{console.log(err); res.status(400).send(err);});
+      console.log(req.body.location);
     const user= new userModel({
         ...req.body,
-        images: images
+        images: images,
+        user_name:req.body.user_name[0]
     });
     try{
        await user.save();
-       res.status(200).send({});
+       res.status(200).send({userId:user._id});
     }
     catch(err){
+        console.log(err);
        res.status(400).send(err);
     }
 })

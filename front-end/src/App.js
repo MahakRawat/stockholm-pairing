@@ -6,8 +6,9 @@ function App() {
   return (
     <BrowserRouter>
     <main>
-    <Route path='/login' component={LoginScreen}></Route>
-    <Route path='/form' component={PortfolioForm}></Route>
+     <Route path='/' exact={true} component={LoginScreen}></Route>
+      <Route path='/form' exact={true} component={PortfolioForm}></Route>
+     {/* <Route path='/mainPage' exact={true} component={MainPage}></Route> */}
     </main>
     </BrowserRouter>
   );

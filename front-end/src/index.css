@@ -45,6 +45,12 @@ h3 {
   border-radius: 0.5rem;
   margin: 0.2rem;
 }
+.mark {
+  position: relative;
+  left: 2rem;
+  top: -2rem;
+  color: #0066b2;
+}
 .col-1,
 .col-2 {
   display: flex;

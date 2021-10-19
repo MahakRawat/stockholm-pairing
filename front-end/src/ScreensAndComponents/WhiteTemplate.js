@@ -14,11 +14,10 @@ function WhiteTemplate(props)
         
             var profile = googleUser.getBasicProfile();
             email= profile.getEmail();
-            console.log(email);
             const {data}= await Axios.get(`http://127.0.0.1:4000/login?email=${email}`);    
             if(data) //already registered
             {
-                 //match finding screen
+                 props.history.push(`/mainPage?userId=${data}`);
             }
             else //new user 
             {
@@ -59,7 +58,8 @@ function WhiteTemplate(props)
                     cookiePolicy={'single_host_origin'}
                        /> 
               <h2>or</h2>
-              <button style={{width:'15rem',color:'grey',backgroundColor:'white',border:'0.2rem solid grey'}} onClick={()=>set_b(1)}>Login with mobile number</button>
+              <button style={{width:'15rem',color:'grey',backgroundColor:'white',border:'0.2rem solid grey'}} 
+                      onClick={()=>set_b(1)}>Login with mobile number</button>
     </div>
     }
     {b===1&&

@@ -27,9 +27,9 @@ const userSchema = new mongoose.Schema({
     },
     phonenumber:{
         type: Number,
-        required: true
+        required: false
     },
-    location:{
+    location_coordinates:{
          latitude: {
               type: Number,
               required: false
@@ -39,6 +39,10 @@ const userSchema = new mongoose.Schema({
               required: false
          }
     },
+    address:{
+         type:String,
+         required:false
+    },
     likes_count:{
           type: Number,
           required:false,
@@ -46,46 +50,32 @@ const userSchema = new mongoose.Schema({
     },
     images:[
         {
-           image:{
-               type:String,
-               required: false
-           }
+            type:String,
+            required: false
+    
         }
     ],
     dob:{
         type: String,
         required: false
     },
-    interests:[
+    interests:
         {
-            interest:{
-                type:String,
-                required: false
-            }
+            type:String,
+            required: false
+
         }
-    ],
-    preferences:[
-        {
-            preference:{
-                type:String,
-                required: false
-            }
-        }
-    ],
+    ,
     likes:[
         {
-            personId:{
-               type:mongoose.Schema.Types.ObjectId,
-               required: false,
-            },
+            type:mongoose.Schema.Types.ObjectId,
+            required: false,
         }
     ],
     matches:[
         {
-            personId:{
-               type:mongoose.Schema.Types.ObjectId,
-               required: false,
-            },
+            type:mongoose.Schema.Types.ObjectId,
+            required: false,
         }
     ]
 
