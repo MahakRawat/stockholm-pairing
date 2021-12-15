@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
     email:{
@@ -13,6 +14,10 @@ const userSchema = new mongoose.Schema({
              throw new Error('invalid email')
         }
     },
+    password:{
+        type: String,
+        required: false
+    },
     user_name:{
         type: String,
         required: true,
@@ -24,10 +29,6 @@ const userSchema = new mongoose.Schema({
     preferred_gender:{
         type: String,
         required: true
-    },
-    phonenumber:{
-        type: Number,
-        required: false
     },
     location_coordinates:{
          latitude: {
@@ -80,6 +81,18 @@ const userSchema = new mongoose.Schema({
     ]
 
 },{timestamps: true});
-
+ userSchema.statics.findByCredentials= async (email,password)=> //model method
+{
+    const temp=await userModel.findOne({email})
+    if(!temp)
+      { 
+          return temp;
+      }
+    const ismatch= await bcrypt.compare(password,temp.password)
+   if(ismatch)
+    return temp;
+   else
+      throw new Error('invalid');
+}
  const userModel = mongoose.model('userModel', userSchema);
  export default userModel;
