@@ -9,13 +9,13 @@ import {Link} from 'react-router-dom';
 
 function PortfolioForm(props){
 
-const phonenumber= props.location.search?props.location.search.split('=')[1]:"";
+const email=props.location.search?props.location.search.split('&')[0].split('=')[1]:"";
+const password=props.location.search?props.location.search.split('&')[1].split('=')[1]:"";
 const interests=['movies','shopping','travelling','music','stand up','acting','dancing','singing','pet lover',
                    'reading','poetry','cricket','fashion','cooking','cycling','running','swimming','badminton',
                    'football','tennis','reels','yoga','foodie','sports','Netflix','photography','planting'];
 
 const [Interestcount,set_interestcount]=useState(0);
-//const [Prefercount,set_prefercount]=useState(0);
 const [name,set_name]=useState("");
 const [dd,set_dd]=useState("");
 const [mm, set_mm]=useState("");
@@ -23,12 +23,10 @@ const [yy,set_yy]=useState("");
 const [gender,set_gender]=useState("");
 const [prefer_gender,set_prefer_gender]=useState("");
 const [m,set_m]=useState("");
-const [email,set_email]= useState("");
 const [photos,set_photos]=useState([]);
 const [inter,set_inter]=useState([]);
-//const [prefer,set_prefer]=useState([]);
 const [address,set_address]=useState("");
-
+const [about,set_about]=useState("");
 const Interesthandler= (val,index,change)=>{
    if(val)
    {
@@ -46,23 +44,6 @@ const Interesthandler= (val,index,change)=>{
    }
    set_interestcount(Interestcount+change);
 }
-// const Preferhandler= (val,index,change)=>{
-//    if(val)
-//    {
-//        const temp=[...prefer,index];
-//        set_prefer(temp);
-//    }
-//    else
-//    {
-//        var temp=[];
-//        prefer.forEach((ele)=>{
-//            if(ele!==index)
-//              temp.push(ele);
-//        })
-//        set_prefer(temp);
-//    };
-//    set_prefercount(Prefercount+change);
-// }
 function ClickHandler1(e)
 {
   const id= e.target.id;
@@ -100,20 +81,20 @@ const handlefile =(file,index)=>
     }
 }
 const submitHandler= ()=>{
- if(name && email && dd && mm && yy && gender && prefer_gender &&(photos.length>=2) && address)
+ if(name && dd && mm && yy && gender && prefer_gender &&(photos.length>=2) && address)
  {
      console.log(name+email+dd+mm+yy+gender+prefer_gender);
      var bodyFormData = new FormData();
      bodyFormData.append('user_name', name);
      bodyFormData.append('email', email);
+     bodyFormData.append('password', password);
      bodyFormData.append('gender',gender);
      bodyFormData.append('preferred_gender',prefer_gender);
      bodyFormData.append('user_name', name);
-     bodyFormData.append('phonenumber',phonenumber);
      bodyFormData.append('dob', dd+'/'+mm+'/'+yy);
      bodyFormData.append('interests', inter);
-     //bodyFormData.append('preferences', prefer);
      bodyFormData.append('address', address);
+     bodyFormData.append('about', about);
      photos.forEach((val)=>{
         if(val)
         {
@@ -220,8 +201,8 @@ return (
                <div className="label">Interests <span className="message">At max 5</span></div>
                <div style={{display:'flex', width:'30',flexWrap:'wrap'}}>
               {
-                 interests.map((interest)=>{
-                      return <Choice interest={interest} id={interest} count={Interestcount} choicehandler={Interesthandler}/>
+                 interests.map((interest,ind)=>{
+                      return <Choice key={ind} interest={interest} id={interest} count={Interestcount} choicehandler={Interesthandler}/>
                      })
               }
                </div>
@@ -243,16 +224,16 @@ return (
           <div className="message">Add atleast two to continue</div>
           </div>
           
-          <div className="child">
-            <div className="label">Email <span className="message alert">*</span></div>
-            <input type="email" style={{width:'28rem', height:'3.6rem'}} placeholder="pqr@gmail.com" 
-                   onKeyUp={(e)=>set_email(e.target.value)}></input>
-         </div>
          <div className="child">
-           <div className="label">Your Location <span className="message alert">*</span> (city district state)</div>
+           <div className="label">Your Location <span className="message alert">*</span> <span style={{color:'GrayText'}}>(city district state)</span></div>
             <input type="text" style={{width:'28rem', height:'3.6rem'}} 
                    onKeyUp={(e)=>set_address(e.target.value)}></input>
              <div className="message">You can change this later whenever your location changes</div>
+          </div>
+          <div className="child">
+           <div className="label">About Yourself </div>
+            <input type="text" style={{width:'28rem', height:'3.6rem'}} 
+                   onKeyUp={(e)=>set_about(e.target.value)}></input>
           </div>
        </div>
    </div>

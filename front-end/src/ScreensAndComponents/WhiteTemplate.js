@@ -1,29 +1,35 @@
 import {useState} from 'react';
 import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
-import OTP from './OTP.js';
+import {useHistory} from "react-router-dom"
 
-function WhiteTemplate(props)
+
+function WhiteTemplate()
 {
-    const [b, set_b] = useState(0);
-    const [number,set_number]=useState("");
-    const [m,set_m]= useState(0);
-     var email=""; 
+    let history=useHistory()
+    const[email,set_email]=useState("");
+    const [password, set_password]=useState("");
+    const [m, set_m]=useState(0);
     const clientId='502560281329-nfuk5nhhufctpj2lib58ipqj5ah96tbg.apps.googleusercontent.com';
     async function onLoginSuccess(googleUser) {
         
             var profile = googleUser.getBasicProfile();
-            email= profile.getEmail();
-            const {data}= await Axios.get(`http://127.0.0.1:4000/login?email=${email}`);    
-            if(data) //already registered
-            {
-                 props.history.push(`/mainPage?userId=${data}`);
-            }
-            else //new user 
-            {
-                set_b(1);
-            }
-            
+            const em=profile.getEmail();
+            try{
+                const {data}= await Axios.get(`http://127.0.0.1:4000/login?email=${em}`);    
+                if(data) //already registered
+                {
+                   history.push(`/mainPage?userId=${data}`);
+                }
+                else //new user 
+                {
+                   history.push(`/form?email=${em}&password=`);
+                }
+             }
+             catch(err)
+             {
+                 console.log(err);
+             }  
        }
       function onLoginFailure()
        {
@@ -31,23 +37,32 @@ function WhiteTemplate(props)
        }
     async function ContinueHandler()
     {
-        if(number.length===10)
-        {
-           const {data}= await Axios.get(`http://127.0.0.1:4000/getVerificationCode?phonenumber=${number}`);
-            if(data.sent)
-            {
-                set_b(2);
+        if(password.length===8)
+          {
+
+            try{
+               const {data}= await Axios.get(`http://127.0.0.1:4000/login?email=${email}&password=${password}`);
+               if(data) //already registered
+                {
+                   history.push(`/mainPage`);
+                }
+                else //new user 
+                {
+                   history.push(`/form?email=${email}&password=${password}`);
+                }
+             }
+           catch(err)
+              {
+                 set_m(1); 
+              }
             }
-        }
-        else{
-            set_m(1);
-        }
+         else{
+             set_m(1);
+         }
     }
     
     
     return (
-        <div>
-     {b===0 &&
     <div>
     <p style={{fontSize:'1rem', color:'grey'}}>By clicking Log in you agree to our terms.</p>
               <GoogleLogin
@@ -58,28 +73,15 @@ function WhiteTemplate(props)
                     cookiePolicy={'single_host_origin'}
                        /> 
               <h2>or</h2>
-              <button style={{width:'15rem',color:'grey',backgroundColor:'white',border:'0.2rem solid grey'}} 
-                      onClick={()=>set_b(1)}>Login with mobile number</button>
+               <div className="label">Enter Email</div>
+               <input type="email" onChange={(e)=>{set_email(e.target.value)}} value={email}></input>
+               <div className="label">Enter Password</div>
+               <input type="text" onChange={(e)=>{set_password(e.target.value); set_m(0);}} value={password}></input>
+               {
+                   m===1&&<p className="alert" style={{fontSize:'0.8rem'}}>please enter valid email and password (8 characters minimum)</p>
+               }
+               <button onClick={ContinueHandler} style={{marginTop:'1rem', width:'10rem', heigth:'2rem'}}>Continue</button>
     </div>
-    }
-    {b===1&&
-      <div>
-          <h3 >ENTER YOUR MOBILE NUMBER</h3>
-          <input type="number" onKeyUp={(e)=>{set_number(e.target.value);}}></input>
-          
-         {
-            m===1&&
-            <p style={{color:'red',fontSize:'1rem'}}>Please enter a valid mobile number</p>
-         }
-          <div className="message">When you tap "Continue", we will send you a text with verification code. Message and data rates may apply. The verified phone number can be used to login.</div>
-          <button onClick={ContinueHandler} style={{marginTop:'1rem'}}>Continue</button>
-      </div>
-    }
-    {
-       b===2&&
-        <OTP number={number} email={email} />
-    }
-     </div>
     )
 }
 export default WhiteTemplate;
