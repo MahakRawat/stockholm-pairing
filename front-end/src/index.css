@@ -97,7 +97,7 @@ input {
   border: 0rem solid rgba(128, 128, 128, 0.123);
   width: 15rem;
   height: 2.5rem;
-  font-size: 1.2rem;
+  font-size: 0.8 rem;
   color: black;
   background-color: rgba(128, 128, 128, 0.123);
   text-align: center;
@@ -129,4 +129,21 @@ button {
 }
 .center p {
   font-size: 3rem;
+}
+.container,
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0rem 5rem 2rem 5rem;
+}
+.filters {
+  width: 50vw;
+  height: 80vh;
+}
+.card-container,
+.swipe {
+  width: 50vw;
+  height: 80vh;
+  align-content: center;
 }

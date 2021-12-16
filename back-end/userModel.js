@@ -30,15 +30,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    location_coordinates:{
-         latitude: {
-              type: Number,
-              required: false
-         },
-         longitude:{
-              type: Number,
-              required: false
-         }
+    location: {
+    type: {
+      type: String, // Don't do `{ location: { type: String } }`
+      enum: ['Point'], // 'location.type' must be 'Point'
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
     },
     address:{
          type:String,
@@ -56,6 +57,10 @@ const userSchema = new mongoose.Schema({
     
         }
     ],
+    about: {
+        type: String,
+        required: false
+    },
     dob:{
         type: String,
         required: false
@@ -94,5 +99,7 @@ const userSchema = new mongoose.Schema({
    else
       throw new Error('invalid');
 }
+ userSchema.index({location: '2dsphere'});  
  const userModel = mongoose.model('userModel', userSchema);
+ 
  export default userModel;

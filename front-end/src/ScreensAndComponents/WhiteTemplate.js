@@ -19,7 +19,7 @@ function WhiteTemplate()
                 const {data}= await Axios.get(`http://127.0.0.1:4000/login?email=${em}`);    
                 if(data) //already registered
                 {
-                   history.push(`/mainPage?userId=${data}`);
+                   history.push(`/mainPage?user=${data}`);
                 }
                 else //new user 
                 {

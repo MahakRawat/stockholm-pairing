@@ -108,7 +108,7 @@ const submitHandler= ()=>{
             })
             .then((res)=>{
                 console.log('done');
-               props.history.push(`/mainPage?id=${res.data.userId}`);
+               props.history.push(`/mainPage?user=${res.data}`);
             })
             .catch(err=>{
                 console.log(err);
@@ -176,14 +176,14 @@ return (
           <div className="child">
           <div className="label" >Preferred Gender <span className="message alert">*</span></div>
           <div style={{display:'flex',flexDirection:'row',listStyle:'none',justifyContent:'left'}}>
-               <div  className="gen" style={{marginLeft:'0rem'}} onClick={ClickHandler2} id='men'>
-                   <div>Men</div>
+               <div  className="gen" style={{marginLeft:'0rem'}} onClick={ClickHandler2} id='male'>
+                   <div>Male</div>
                    {
                       prefer_gender==='men'&&<Mark style={{fontSize:'3rem'}} className="mark"/>
                    }
                 </div>
-               <div className="gen" onClick={ClickHandler2} id='women'>
-                   <div>Women</div>
+               <div className="gen" onClick={ClickHandler2} id='female'>
+                   <div>Female</div>
                    {
                        prefer_gender==='women'&&<Mark style={{fontSize:'3rem'}} className="mark"/>
                    }

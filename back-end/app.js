@@ -42,11 +42,11 @@ app.get('/login',async (req,res)=>{
            res.send(500).send();
        }
    }
-   else if(req.query.email) //gmail login
+   else if(req.query.email) //google login
    {
        user= await userModel.findOne({email:req.query.email});
    }
-   console.log(user);
+   //console.log(user);
    res.status(200).send(user);
 })
 
@@ -58,10 +58,11 @@ app.post('/register',upload.array("images",7),async (req,res)=>{
     })
     const url='https://api.mapbox.com/geocoding/v5/mapbox.places/'+encodeURI(req.body.address)+'.json?access_token=pk.eyJ1IjoibWFoYWstcmF3YXQiLCJhIjoiY2tra3FpZjN1MDNoMjJ3bG9sdDdhdTY0ayJ9.zaTDuw_EF0IjEd3e8jwiQQ&limit=1'
      await Axios.get(url)
-     .then(({data})=>{req.body.location= {longitude:data.features[0].center[0],latitude: data.features[0].center[1]}})
-     .catch((err)=>{res.status(400).send(err);});
+     .then(({data})=>{req.body.location={type:'Point',coordinates:[data.features[0].center[0],data.features[0].center[1]]}})
+     .catch((err)=>{res.status(400).send(err)});
    
-    req.body.password= await bcrypt.hash(req.body.password,8);
+    if(req.body.password)
+      req.body.password= await bcrypt.hash(req.body.password,8);
 
     const user= new userModel({
         ...req.body,
@@ -70,17 +71,62 @@ app.post('/register',upload.array("images",7),async (req,res)=>{
     });
     try{
        await user.save();
-       res.status(200).send({userId:user._id});
+       res.status(200).send(user);
     }
     catch(err){
-        console.log(err);
        res.status(400).send(err);
     }
 })
 
 app.get('/search',async (req,res)=>{
+ const gen=req.query.gender;
+ const pre_gen=req.query.preferred_gender;
+ const loc=req.query.location;
+ const dis=req.query.distance?req.query.distance:10000;
+ const prefer=req.query.preference; //array
+ var list=[];
+ if(loc)
+ {
+     var long,lat;
+     const url='https://api.mapbox.com/geocoding/v5/mapbox.places/'+encodeURI(loc)+'.json?access_token=pk.eyJ1IjoibWFoYWstcmF3YXQiLCJhIjoiY2tra3FpZjN1MDNoMjJ3bG9sdDdhdTY0ayJ9.zaTDuw_EF0IjEd3e8jwiQQ&limit=1'
+     await Axios.get(url)
+     .then(({data})=>{
+                      long=data.features[0].center[0];
+                      lat= data.features[0].center[1];
+                    })
+     .catch((err)=>{res.status(400).send(err)});
 
-    
+     list=await userModel.find({
+     gender:pre_gen,
+     preferred_gender:gen,
+     location:
+       { $near :
+          {
+            $geometry: { type: "Point",  coordinates: [ long, lat] },
+            $minDistance: 0,
+            $maxDistance: dis
+          }
+        }
+    }); 
+}
+else
+{
+    list= await userModel.find({
+     gender:'female',
+     preferred_gender:'male',
+    })
+}
+ if(prefer)
+ {
+      list= list.filter(x=>
+        { 
+            return (x.interests.indexOf(prefer[0])!=-1||
+                     x.interests.indexOf(prefer[1])!=-1||
+                     x.interests.indexOf(prefer[2])!=-1||
+                     x.interests.indexOf(prefer[3])!=-1)
+     });
+ }
+ res.status(200).send(list);
 })
 const port= 4000 ;
  app.listen(port,()=>{
