@@ -135,7 +135,10 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0rem 5rem 2rem 5rem;
+  padding: 0rem 5rem 1rem 5rem;
+}
+.nav {
+  border-bottom: #0066b2 solid 0.1rem;
 }
 .filters {
   width: 50vw;
