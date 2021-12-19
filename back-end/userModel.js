@@ -72,7 +72,13 @@ const userSchema = new mongoose.Schema({
 
         }
     ,
-    likes:[
+    visited:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            required: false,
+        }
+    ],
+    rightSwipe:[
         {
             type:mongoose.Schema.Types.ObjectId,
             required: false,

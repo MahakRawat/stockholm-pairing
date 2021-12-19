@@ -1,11 +1,14 @@
 import {useState} from 'react';
 import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
-import {useHistory} from "react-router-dom"
+import {useHistory} from "react-router-dom";
+import {useDispatch} from 'react-redux';
+import {userInfoAction} from '../store.js';
 
 
 function WhiteTemplate()
 {
+   const dispatch= useDispatch();
     let history=useHistory()
     const[email,set_email]=useState("");
     const [password, set_password]=useState("");
@@ -19,7 +22,8 @@ function WhiteTemplate()
                 const {data}= await Axios.get(`http://127.0.0.1:4000/login?email=${em}`);    
                 if(data) //already registered
                 {
-                   history.push(`/mainPage?user=${data}`);
+                   dispatch(userInfoAction(data));
+                   history.push(`/mainPage`);
                 }
                 else //new user 
                 {
@@ -37,13 +41,14 @@ function WhiteTemplate()
        }
     async function ContinueHandler()
     {
-        if(password.length===8)
+        if(password.length>=8)
           {
 
             try{
                const {data}= await Axios.get(`http://127.0.0.1:4000/login?email=${email}&password=${password}`);
                if(data) //already registered
                 {
+                   dispatch(userInfoAction(data));
                    history.push(`/mainPage`);
                 }
                 else //new user 
@@ -74,9 +79,9 @@ function WhiteTemplate()
                        /> 
               <h2>or</h2>
                <div className="label">Enter Email</div>
-               <input type="email" onChange={(e)=>{set_email(e.target.value)}} value={email}></input>
+               <input type="email" onChange={(e)=>{set_email(e.target.value.toLowerCase())}} value={email}></input>
                <div className="label">Enter Password</div>
-               <input type="text" onChange={(e)=>{set_password(e.target.value); set_m(0);}} value={password}></input>
+               <input type="password" onChange={(e)=>{set_password(e.target.value); set_m(0);}} value={password}></input>
                {
                    m===1&&<p className="alert" style={{fontSize:'0.8rem'}}>please enter valid email and password (8 characters minimum)</p>
                }

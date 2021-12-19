@@ -83,7 +83,7 @@ const handlefile =(file,index)=>
 const submitHandler= ()=>{
  if(name && dd && mm && yy && gender && prefer_gender &&(photos.length>=2) && address)
  {
-     console.log(name+email+dd+mm+yy+gender+prefer_gender);
+    
      var bodyFormData = new FormData();
      bodyFormData.append('user_name', name);
      bodyFormData.append('email', email);
@@ -179,13 +179,13 @@ return (
                <div  className="gen" style={{marginLeft:'0rem'}} onClick={ClickHandler2} id='male'>
                    <div>Male</div>
                    {
-                      prefer_gender==='men'&&<Mark style={{fontSize:'3rem'}} className="mark"/>
+                      prefer_gender==='male'&&<Mark style={{fontSize:'3rem'}} className="mark"/>
                    }
                 </div>
                <div className="gen" onClick={ClickHandler2} id='female'>
                    <div>Female</div>
                    {
-                       prefer_gender==='women'&&<Mark style={{fontSize:'3rem'}} className="mark"/>
+                       prefer_gender==='female'&&<Mark style={{fontSize:'3rem'}} className="mark"/>
                    }
                </div>
                <div className="gen" onClick={ClickHandler2} id='everyone'>

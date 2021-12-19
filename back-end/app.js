@@ -47,9 +47,15 @@ app.get('/login',async (req,res)=>{
        user= await userModel.findOne({email:req.query.email});
    }
    //console.log(user);
-   res.status(200).send(user);
+   if(user)
+     res.status(200).send(user);
+   else
+     res.send();
 })
-
+app.get('/profile',async (req,res)=>{
+    const user= await userModel.findOne({_id:req.query.id});
+    res.status(200).send(user);
+})
 
 app.post('/register',upload.array("images",7),async (req,res)=>{
     var images=[];
@@ -79,11 +85,13 @@ app.post('/register',upload.array("images",7),async (req,res)=>{
 })
 
 app.get('/search',async (req,res)=>{
+ const id=req.query.id; 
  const gen=req.query.gender;
  const pre_gen=req.query.preferred_gender;
  const loc=req.query.location;
- const dis=req.query.distance?req.query.distance:10000;
+ const dis=req.query.distance?req.query.distance:1000000;
  const prefer=req.query.preference; //array
+ const user= await userModel.findOne({_id:id});
  var list=[];
  if(loc)
  {
@@ -112,13 +120,18 @@ app.get('/search',async (req,res)=>{
 else
 {
     list= await userModel.find({
-     gender:'female',
-     preferred_gender:'male',
+     gender:pre_gen,
+     preferred_gender:gen,
     })
 }
+ var newList =list.filter(x=>{
+     const val= user.visited.every(y=>{return (x._id.toString()!=y.toString())});
+      return (x._id.toString()!=id)&&(val);
+     });
+//list =list.filter(x=>{return (x._id!=id)});
  if(prefer)
  {
-      list= list.filter(x=>
+      newList= newList.filter(x=>
         { 
             return (x.interests.indexOf(prefer[0])!=-1||
                      x.interests.indexOf(prefer[1])!=-1||
@@ -126,7 +139,44 @@ else
                      x.interests.indexOf(prefer[3])!=-1)
      });
  }
- res.status(200).send(list);
+ res.status(200).send(newList);
+})
+app.patch('/rightSwipe',async (req,res)=>{
+  const user1_id=req.query.user1;
+  const user2_id=req.query.user2;
+  const user1=await userModel.findOne({_id:user1_id});
+  const user2=await userModel.findOne({_id:user2_id});
+  user1.rightSwipe.push(user2_id);
+  user1.visited.push(user2_id);
+  if(!user2.rightSwipe.every(x=> {return x!=user1_id}))
+  {
+      //it's a match
+      user1.matches.push(user2_id);
+      user2.matches.push(user1_id);
+      await user1.save();
+      await user2.save();
+      res.status(200).send({user:user1,matched:true});
+  }
+  else
+  {
+      await user1.save();
+      res.status(200).send({user:user1,matched:false});
+  }
+  
+})
+app.patch('/visited',async(req,res)=>{
+   const user1_id=req.query.user1;
+   const user2_id=req.query.user2; 
+   const user1= await userModel.findOne({_id:user1_id});
+   user1.visited.push(user2_id);
+  await user1.save();
+  res.status(200).send(user1);
+})
+app.patch('/liked',async(req,res)=>{
+    const user=await userModel.findOne({_id:req.query.user})
+    user.likes_count=user.likes_count+parseInt(req.query.num);
+    await user.save();
+    res.send();
 })
 const port= 4000 ;
  app.listen(port,()=>{

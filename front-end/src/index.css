@@ -1,5 +1,5 @@
 html {
-  height: 175vh;
+  height: 140vh;
 }
 * {
   font-family: Arial, Helvetica, sans-serif;
@@ -97,7 +97,7 @@ input {
   border: 0rem solid rgba(128, 128, 128, 0.123);
   width: 15rem;
   height: 2.5rem;
-  font-size: 0.8 rem;
+  font-size: 1rem;
   color: black;
   background-color: rgba(128, 128, 128, 0.123);
   text-align: center;
@@ -149,4 +149,7 @@ button {
   width: 50vw;
   height: 80vh;
   align-content: center;
+}
+.swipe {
+  position: absolute;
 }
