@@ -24,13 +24,13 @@ function Choice(props) {
       <div className="choices">
       <div style={{textAlign:'center'}}>{props.interest}</div>
       {
-       m===0&&<AddIcon style={{position:'relative', left:'5.4rem',top:'-0.2rem',color:'#0066b2' ,fontSize:'1.3rem'}} 
+       m===0&&<AddIcon style={{position:'relative', left:'5.4rem',top:'-0.2rem',color:'#0066b2' ,fontSize:'1.3rem',cursor:'pointer'}} 
                onClick={clickhandler} 
                key={props.id}
       />
        }
        {
-         m===1&&<CloseIcon style={{position:'relative', left:'5.4rem',top:'-0.2rem',color:'#0066b2' ,fontSize:'1.3rem'}} 
+         m===1&&<CloseIcon style={{position:'relative', left:'5.4rem',top:'-0.2rem',color:'#0066b2' ,fontSize:'1.3rem',cursor:'pointer'}} 
                onClick={clickhandler}
                key={props.id}
       />

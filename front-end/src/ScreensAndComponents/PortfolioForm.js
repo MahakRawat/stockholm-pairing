@@ -4,13 +4,18 @@ import Mark from '@material-ui/icons/DoneAllSharp';
 import FileUploader from "./Fileuploader";
 import Choice from "./Choice";
 import {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import Axios from "axios";
 import {Link} from 'react-router-dom';
+import { userInfoAction } from "../store";
 
 function PortfolioForm(props){
 
 const email=props.location.search?props.location.search.split('&')[0].split('=')[1]:"";
 const password=props.location.search?props.location.search.split('&')[1].split('=')[1]:"";
+if(!email)
+  props.history.push(`/`);
+ 
 const interests=['movies','shopping','travelling','music','stand up','acting','dancing','singing','pet lover',
                    'reading','poetry','cricket','fashion','cooking','cycling','running','swimming','badminton',
                    'football','tennis','reels','yoga','foodie','sports','Netflix','photography','planting'];
@@ -27,6 +32,8 @@ const [photos,set_photos]=useState([]);
 const [inter,set_inter]=useState([]);
 const [address,set_address]=useState("");
 const [about,set_about]=useState("");
+
+const dispatch= useDispatch();
 const Interesthandler= (val,index,change)=>{
    if(val)
    {
@@ -61,9 +68,9 @@ const handlefile =(file,index)=>
     if(file)
     {   
         var reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onloadend=()=>{
         ele.style.backgroundImage= `url(${reader.result})`};
-        reader.readAsDataURL(file);
         const temp=[...photos,file];
         set_photos(temp);
     }
@@ -107,8 +114,8 @@ const submitHandler= ()=>{
                      headers: { "Content-Type": "multipart/form-data" },
             })
             .then((res)=>{
-                console.log('done');
-               props.history.push(`/mainPage?user=${res.data}`);
+               dispatch(userInfoAction(res)); 
+               props.history.push(`/mainPage`);
             })
             .catch(err=>{
                 console.log(err);
@@ -199,7 +206,7 @@ return (
          
          <div className="child">
                <div className="label">Interests <span className="message">At max 5</span></div>
-               <div style={{display:'flex', width:'30',flexWrap:'wrap'}}>
+               <div style={{display:'flex', width:'30vw',flexWrap:'wrap'}}>
               {
                  interests.map((interest,ind)=>{
                       return <Choice key={ind} interest={interest} id={interest} count={Interestcount} choicehandler={Interesthandler}/>

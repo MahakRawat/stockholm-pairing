@@ -6,10 +6,10 @@ import Axios  from 'axios';
 
 function ProfileTemp(props) {
 
-  //const [lastdirection,set_lastdirection]=useState("");
    const dispatch= useDispatch();
+  
   const swiped = async (id,direction) => {
-      console.log(direction);
+      
     if(direction==='right')
     {
        const {data}= await Axios.patch(`http://127.0.0.1:4000/rightSwipe?user1=${props.my_id}&user2=${id}`);//user1 has rightswiped user2
@@ -28,7 +28,7 @@ function ProfileTemp(props) {
   }
 
   const outOfFrame = async (id) => {
-    
+     
   }
   async function like(e){
       if(!e.target.style.color)
@@ -48,7 +48,7 @@ function ProfileTemp(props) {
      }
    }
   return(
-   <div style={{padding:'0rem 0rem 0rem 4rem'}}>
+   <div>
        <TinderCard className='swipe' key={props.id} preventSwipe={['up','down']} onSwipe={(dir) => swiped(props.id,dir)} onCardLeftScreen={() => outOfFrame()}>
             
            {
@@ -73,7 +73,7 @@ function ProfileTemp(props) {
                 <h4 style={{backgroundColor:'whitesmoke'}}>{props.dob}</h4>
                 <h4 style={{backgroundColor:'whitesmoke'}}>{props.interests}</h4>
                 <h4 style={{backgroundColor:'whitesmoke'}}>{props.about}</h4>
-                <div style={{textAlign:'center'}}><Heart style={{fontSize:'3rem',color:'white'}} onClick={like}></Heart></div>
+                <div style={{textAlign:'center'}}><Heart style={{fontSize:'3rem',color:'white',cursor:'pointer'}} onClick={like}></Heart></div>
             </div>
       </TinderCard>
    </div>

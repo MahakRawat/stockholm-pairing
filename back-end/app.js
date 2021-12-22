@@ -31,7 +31,6 @@ app.use(cors(corsOptions));
 
 app.get('/login',async (req,res)=>{
    var user;
-   console.log(req.query.email);
    if(req.query.email && req.query.password)
    {
        try{
@@ -89,8 +88,8 @@ app.get('/search',async (req,res)=>{
  const gen=req.query.gender;
  const pre_gen=req.query.preferred_gender;
  const loc=req.query.location;
- const dis=req.query.distance?req.query.distance:1000000;
- const prefer=req.query.preference; //array
+ const dis=req.query.distance?parseInt(req.query.distance)*1000:1000000;
+ const Prefer=req.query.preference; //string
  const user= await userModel.findOne({_id:id});
  var list=[];
  if(loc)
@@ -128,9 +127,10 @@ else
      const val= user.visited.every(y=>{return (x._id.toString()!=y.toString())});
       return (x._id.toString()!=id)&&(val);
      });
-//list =list.filter(x=>{return (x._id!=id)});
- if(prefer)
+
+ if(Prefer)
  {
+     const prefer= Prefer.split(",");
       newList= newList.filter(x=>
         { 
             return (x.interests.indexOf(prefer[0])!=-1||

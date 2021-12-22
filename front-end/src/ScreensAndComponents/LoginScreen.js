@@ -20,7 +20,7 @@ function LoginScreen()
                      </div>
             </div>
             { a?
-            ( <div style={{height:'175vh',width:'100vw',backgroundColor:'rgba(0,0,0,0.8)',textAlign:'center'}}>
+            ( <div style={{height:'100vh',width:'100vw',backgroundColor:'rgba(0,0,0,0.8)',textAlign:'center'}}>
               <div className="center" style={{height:'28rem',width:"21rem",backgroundColor:'white', borderRadius:'0.5rem',top:'25%'}}>
               <div style={{textAlign:'end'}}><button style={{borderRadius:'2rem',backgroundColor:'white',border:'0.1rem solid grey',color:'black',width:'2rem',height:'2rem'}} onClick={()=>{set_a(0)}}>X</button></div>
               <WhiteTemplate />

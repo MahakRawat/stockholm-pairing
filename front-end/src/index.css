@@ -1,11 +1,11 @@
 html {
-  height: 140vh;
+  height: 100vh;
 }
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
 #root {
-  height: 175vh;
+  height: 140vh;
   width: 100vw;
   margin: 0;
 }
@@ -109,10 +109,11 @@ button {
   width: 12rem;
   height: 3rem;
   font-size: 1rem;
+  cursor: pointer;
 }
 /* LoginScreen*/
 .background {
-  height: 175vh;
+  height: 140vh;
   width: 100vw;
   margin-top: 0;
   padding: 0;
@@ -141,14 +142,14 @@ button {
   border-bottom: #0066b2 solid 0.1rem;
 }
 .filters {
-  width: 50vw;
+  width: 30vw;
   height: 80vh;
 }
 .card-container,
 .swipe {
-  width: 50vw;
+  width: 40vw;
   height: 80vh;
-  align-content: center;
+  align-items: center;
 }
 .swipe {
   position: absolute;

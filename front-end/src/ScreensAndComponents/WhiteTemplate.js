@@ -1,15 +1,15 @@
 import {useState} from 'react';
 import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
-import {useHistory} from "react-router-dom";
 import {useDispatch} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import {userInfoAction} from '../store.js';
 
 
-function WhiteTemplate()
+function WhiteTemplate(props)
 {
+   const history=useHistory();
    const dispatch= useDispatch();
-    let history=useHistory()
     const[email,set_email]=useState("");
     const [password, set_password]=useState("");
     const [m, set_m]=useState(0);
@@ -23,11 +23,11 @@ function WhiteTemplate()
                 if(data) //already registered
                 {
                    dispatch(userInfoAction(data));
-                   history.push(`/mainPage`);
+                      history.push(`/mainPage`);
                 }
                 else //new user 
                 {
-                   history.push(`/form?email=${em}&password=`);
+                    history.push(`/form?email=${em}&password=`);
                 }
              }
              catch(err)
