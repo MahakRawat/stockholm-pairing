@@ -4,11 +4,12 @@ html {
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
-#root {
-  height: 140vh;
+body {
+  margin: 0px;
+  height: 100vh;
   width: 100vw;
-  margin: 0;
 }
+
 .label {
   color: grey;
 }
@@ -139,11 +140,20 @@ button {
   padding: 0rem 5rem 1rem 5rem;
 }
 .nav {
+  margin-top: 0.5rem;
   border-bottom: #0066b2 solid 0.1rem;
 }
 .filters {
   width: 30vw;
   height: 80vh;
+}
+.User {
+  display: flex;
+  align-items: center;
+  color: #0066b2;
+  font-style: italic;
+  font-size: larger;
+  cursor: pointer;
 }
 .card-container,
 .swipe {

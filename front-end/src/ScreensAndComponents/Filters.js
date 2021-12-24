@@ -36,6 +36,7 @@ export default function Filters(props) {
   const SelectG=(e)=>{
    set_globally(true);
    set_locally(false);
+   set_loc("");
     set_c1('green');
     set_c2('black');
   }
@@ -50,7 +51,7 @@ export default function Filters(props) {
  }
     return (
         <div>
-            <div  style={{overflowY:'scroll',width:'30vw',height:'140vh'}}>
+            <div  style={{overflowY:'scroll',width:'30vw',height:'100vh'}}>
             <h1 style={{textAlign:'center',width:'20vw'}}><u>Filters</u></h1>
             <div className="child">
                <div style={{padding:'1rem 0rem 1rem 0rem'}}><Circle style={{fontSize:'1.2rem',color: c1,cursor:'pointer'}} onClick={(e)=>SelectG(e)}></Circle>Search Globally</div>
@@ -58,10 +59,10 @@ export default function Filters(props) {
                {
                    locally&&
                    (<div><input type='text' onKeyUp={(e)=>set_loc(e.target.value)} />
-                   <input type="range" min="0" max="1000" onChange={e=>set_dis(e.target.value)}/></div>)
+                   <input style={{marginTop:'2rem'}}type="range" min="0" max="1000" onChange={e=>set_dis(e.target.value)}/></div>)
                }
 
-               <div className="label" style={{padding:'4rem 0rem 0rem 0rem'}}>Add Preferences <span className="message">At max 5</span></div>
+               <div className="label" style={{padding:'4rem 0rem 0rem 0rem'}}><h3>Add Preferences </h3><span className="message">At max 5</span></div>
                <div style={{display:'flex', width:'20vw',flexWrap:'wrap'}}>
               {
                  preferences.map((prefer,ind)=>{

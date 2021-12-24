@@ -2,13 +2,13 @@ import {createStore} from 'redux';
 
 
 export const userInfoAction= (data)=>{
-   localStorage.setItem('userInfo',JSON.stringify(data));
+   //localStorage.setItem('userInfo',JSON.stringify(data));
   return ({
       type: 'userInfoUpdated',
       payload: data
   });
 }
-const initialState= localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')):{name:"mahak"};
+const initialState= /*localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')):*/{};
 
 const userInfoReducer =(state=initialState,action)=>{
   if(action.type==='userInfoUpdated')

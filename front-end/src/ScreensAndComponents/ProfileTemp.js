@@ -7,28 +7,32 @@ import Axios  from 'axios';
 function ProfileTemp(props) {
 
    const dispatch= useDispatch();
-  
+    var match=false;
   const swiped = async (id,direction) => {
       
     if(direction==='right')
     {
-       const {data}= await Axios.patch(`http://127.0.0.1:4000/rightSwipe?user1=${props.my_id}&user2=${id}`);//user1 has rightswiped user2
+       const {data}= await Axios.patch(`/users/rightSwipe?user1=${props.my_id}&user2=${id}`);//user1 has rightswiped user2
        dispatch(userInfoAction(data.user));
        if(data.matched)
        {
            //match
-           props.matched();
+           match=true;
        }
     }
     else if(direction==='left')
     {
-        const {data}=await Axios.patch(`http://127.0.0.1:4000/visited?user1=${props.my_id}&user2=${id}`);
+        const {data}=await Axios.patch(`/users/visited?user1=${props.my_id}&user2=${id}`);
          dispatch(userInfoAction(data));
     }
   }
 
-  const outOfFrame = async (id) => {
-     
+  const outOfFrame = async () => {
+      console.log(1);
+     if(match)
+     {
+        props.set_a(props.name);
+     }
   }
   async function like(e){
       if(!e.target.style.color)
@@ -39,12 +43,12 @@ function ProfileTemp(props) {
      {
          e.target.style.color="red";
          num=1;
-         await Axios.patch(`http://127.0.0.1:4000/liked?user=${props.id}&num=${num}`);
+         await Axios.patch(`/users/liked?user=${props.id}&num=${num}`);
      }
      else{
          e.target.style.color="white";
          num=-1
-        await Axios.patch(`http://127.0.0.1:4000/liked?user=${props.id}&num=${num}`);
+        await Axios.patch(`/users/liked?user=${props.id}&num=${num}`);
      }
    }
   return(
@@ -69,10 +73,10 @@ function ProfileTemp(props) {
             }
             <div style={{backgroundColor:'#0066b2', width:'26vw',height:'16rem',padding:'0.5rem 0rem 1rem 0rem',boxShadow:'0rem 0.5rem 0.5rem 0rem rgba(0,0,0,0.3)',borderRadius:'0rem 0rem 0.5rem 0.5rem',textAlign:'center'}}>
                 <h4 style={{backgroundColor:'whitesmoke'}}>{props.name}</h4>
-                <h4 style={{backgroundColor:'whitesmoke'}}>{props.address}</h4>
+                <h4 style={{backgroundColor:'whitesmoke',overflowWrap:'break-word'}}>{props.address}</h4>
                 <h4 style={{backgroundColor:'whitesmoke'}}>{props.dob}</h4>
-                <h4 style={{backgroundColor:'whitesmoke'}}>{props.interests}</h4>
-                <h4 style={{backgroundColor:'whitesmoke'}}>{props.about}</h4>
+                <h4 style={{backgroundColor:'whitesmoke',overflowWrap:'break-word'}}>{props.interests}</h4>
+                <h4 style={{backgroundColor:'whitesmoke',overflowWrap:'break-word'}}>{props.about}</h4>
                 <div style={{textAlign:'center'}}><Heart style={{fontSize:'3rem',color:'white',cursor:'pointer'}} onClick={like}></Heart></div>
             </div>
       </TinderCard>

@@ -19,7 +19,7 @@ function WhiteTemplate(props)
             var profile = googleUser.getBasicProfile();
             const em=profile.getEmail();
             try{
-                const {data}= await Axios.get(`http://127.0.0.1:4000/login?email=${em}`);    
+                const {data}= await Axios.get(`http://127.0.0.1:4000/users/login?email=${em}`);    
                 if(data) //already registered
                 {
                    dispatch(userInfoAction(data));
@@ -45,7 +45,7 @@ function WhiteTemplate(props)
           {
 
             try{
-               const {data}= await Axios.get(`http://127.0.0.1:4000/login?email=${email}&password=${password}`);
+               const {data}= await Axios.get(`http://127.0.0.1:4000/users/login?email=${email}&password=${password}`);
                if(data) //already registered
                 {
                    dispatch(userInfoAction(data));

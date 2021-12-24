@@ -109,7 +109,7 @@ const submitHandler= ()=>{
         }
        })
          Axios({  method: "post",
-                     url: "http://127.0.0.1:4000/register",
+                     url: "http://127.0.0.1:4000/users/register",
                      data: bodyFormData,
                      headers: { "Content-Type": "multipart/form-data" },
             })
@@ -138,13 +138,13 @@ return (
    <div style={{display:'flex', flexDirection:'row' ,justifyContent:'space-between', width:'70vw',marginTop:'4rem',top:'60%', left:'50%'}} className="center">
        <div className="col-1">
          <div className="child">
-         <div className="label">Your Name <span className="message alert">*</span></div>
+         <div className="label">Your Name <b>*</b> </div>
          <input type="text" placeholder="abcxyz" style={{width:'28rem', height:'3.6rem'}} 
                 onKeyUp={(e)=>set_name(e.target.value)}>
          </input>
          </div>
          <div className="child">
-         <div className="label">Birthday <span className="message alert" >*</span></div>
+         <div className="label">Birthday <b>*</b></div>
          <div style={{display:'flex',flexDirection:'row'}}>
           <input type="text" placeholder="dd" style={{width:'6rem',marginTop:'0.2rem',marginBottom:'0.2rem',marginRight:'0.2rem',height:'3.6rem'}} 
                   onKeyUp={(e)=>set_dd(e.target.value)}>
@@ -158,7 +158,7 @@ return (
          </div>
          </div>
          <div className="child">
-          <div className="label">Gender <span className="message alert">*</span></div>
+          <div className="label">Gender<b>*</b></div>
           <div style={{display:'flex',flexDirection:'row',listStyle:'none',justifyContent:'left'}}>
                  <div  className="gen" style={{marginLeft:'0rem'}} onClick={ClickHandler1} id='male'>
                    <div>Male</div>
@@ -181,7 +181,7 @@ return (
            </div>
           </div >
           <div className="child">
-          <div className="label" >Preferred Gender <span className="message alert">*</span></div>
+          <div className="label" >Preferred Gender <b>*</b></div>
           <div style={{display:'flex',flexDirection:'row',listStyle:'none',justifyContent:'left'}}>
                <div  className="gen" style={{marginLeft:'0rem'}} onClick={ClickHandler2} id='male'>
                    <div>Male</div>
@@ -232,7 +232,7 @@ return (
           </div>
           
          <div className="child">
-           <div className="label">Your Location <span className="message alert">*</span> <span style={{color:'GrayText'}}>(city district state)</span></div>
+           <div className="label">Your Location<b>*</b><span style={{color:'GrayText'}}>(city state)</span></div>
             <input type="text" style={{width:'28rem', height:'3.6rem'}} 
                    onKeyUp={(e)=>set_address(e.target.value)}></input>
              <div className="message">You can change this later whenever your location changes</div>
