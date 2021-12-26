@@ -23,7 +23,7 @@ export default function ChatBoxNav({currentChat,currentUser}) {
         <div>
             <div className="message_nav">
             <div><img src={receiver?.images[0]} className="chatImg" alt=""></img><span style={{position:'relative',top:'-1rem'}}><b>{receiver?.user_name}</b></span></div>
-            <div><a href='http://localhost:3030/' target="_blank" rel="alternate"><Video style={{fontSize:'3.5rem',color:'white'}}></Video></a></div>
+            <div><a href='http://localhost:3040/' target="_blank" rel="alternate"><Video style={{fontSize:'3.5rem',color:'white'}}></Video></a></div>
             </div>
         </div>
     )

@@ -29,7 +29,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
      }
      getMatches();
      setOnlineMatches(Matches.filter(m=>onlineUsers.some(x=>x.userId===m)));
-   },[currentId,onlineUsers]);
+   },[currentId,onlineUsers,Matches]);
   return (
     <div className="chatOnline">
       {onlineMatches.map((o) => (

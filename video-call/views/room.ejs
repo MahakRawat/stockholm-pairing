@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    const ROOM_ID = "<%= roomId %>"
+  </script>
+  <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="script.js" defer></script>
+  <title>Document</title>
+  <style>
+    #video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 500px);
+      grid-auto-rows: 400px;
+      justify-content: center;
+      height: 95vh;
+      align-content: center;
+      grid-gap: 50px;
+    }
+    
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: solid black 10px;
+    }
+    body{
+      background-color: rgb(92, 89, 89);
+    }
+    .URL{
+      cursor:copy;
+    }
+  </style>
+</head>
+<body>
+  <div>Copy the URL and send it to your match.</div>
+  <div class="URL">http://localhost:3040/<%= roomId %></div>
+  <div id="video-grid"></div>
+</body>
+</html>
