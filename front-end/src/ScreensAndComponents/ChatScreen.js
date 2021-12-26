@@ -5,7 +5,6 @@ import Message from "./message/Message";
 import ChatOnline from "./chatOnline/ChatOnline.jsx";
 import { useEffect, useRef, useState } from "react";
 import {useSelector} from 'react-redux';
-import Ficon from "@material-ui/icons/FilterVintageTwoTone";
 import Person from "@material-ui/icons/Person";
 import axios from "axios";
 import { io } from "socket.io-client";
