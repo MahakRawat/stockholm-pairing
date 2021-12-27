@@ -51,7 +51,7 @@ export default function Filters(props) {
  }
     return (
         <div>
-            <div  style={{overflowY:'scroll',width:'30vw',height:'100vh'}}>
+            <div>
             <h1 style={{textAlign:'center',width:'20vw'}}><u>Filters</u></h1>
             <div className="child">
                <div style={{padding:'1rem 0rem 1rem 0rem'}}><Circle style={{fontSize:'1.2rem',color: c1,cursor:'pointer'}} onClick={(e)=>SelectG(e)}></Circle>Search Globally</div>

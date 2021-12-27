@@ -144,8 +144,9 @@ button {
   border-bottom: #0066b2 solid 0.1rem;
 }
 .filters {
-  width: 30vw;
-  height: 80vh;
+  width: 20vw;
+  height: 100vh;
+  overflow-y: scroll;
 }
 .User {
   display: flex;
@@ -155,12 +156,31 @@ button {
   font-size: larger;
   cursor: pointer;
 }
+
 .card-container,
 .swipe {
-  width: 40vw;
+  width: 50vw;
   height: 80vh;
   align-items: center;
 }
 .swipe {
   position: absolute;
+}
+.profile {
+  margin: 0;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  -ms-transform: translate(-50%, -30%);
+  transform: translate(-50%, -30%);
+  display: flex;
+}
+.circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: rgb(202, 198, 198);
+  margin: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
 }

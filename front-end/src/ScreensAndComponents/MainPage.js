@@ -25,6 +25,10 @@ function MainPage(props) {
      .then(res=>{setloading(false); setlist(res.data);})
      .catch(e=>console.log(e)); 
    }
+
+   const redirect_profile=()=>{
+     history.push('/profile');
+   }
    
    useEffect(() => {
       Axios.get(`/users/search?gender=${data.gender}&preferred_gender=${data.preferred_gender}&id=${data._id}`)
@@ -34,7 +38,7 @@ function MainPage(props) {
     return (
         <div>
         { a?
-            ( <div style={{height:'140vh',width:'100vw',backgroundColor:'rgba(0,0,0,0.8)',textAlign:'center'}}>
+            ( <div style={{height:'100vh',width:'100vw',backgroundColor:'rgba(0,0,0,0.8)',textAlign:'center'}}>
               <div className="center" style={{height:'35rem',width:"21rem",backgroundColor:'white', borderRadius:'0.5rem',top:'40%'}}>
               <div style={{textAlign:'end'}}>
               <button style={{borderRadius:'2rem',backgroundColor:'white',border:'0.1rem solid grey',color:'black',width:'2rem',height:'2rem'}} onClick={()=>{set_a("")}}>X
@@ -48,7 +52,7 @@ function MainPage(props) {
             )
             :  <div >
                <div className="nav">
-                <div className="User"><img src={data.images[0]} className="chatImg" alt=""></img><span><b>{data.user_name}</b></span></div>
+                <div className="User"><img src={data.images[0]} className="chatImg" alt=""></img><span onClick={redirect_profile}><b>{data.user_name}</b></span></div>
                <div><Ficon style={{color:'#0066b2',fontSize:"3.2rem",cursor:'pointer'}} /></div>
                <div><Chat style={{color:'#0066b2',fontSize:'3rem',cursor:'pointer'}} onClick={()=>{history.push('/chat')}}></Chat></div>
                </div>
