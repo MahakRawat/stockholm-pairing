@@ -60,7 +60,7 @@ function WhiteTemplate(props)
               {
                  set_m(1); 
               }
-            }
+          }
          else{
              set_m(1);
          }

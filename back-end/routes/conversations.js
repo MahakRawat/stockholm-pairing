@@ -4,7 +4,6 @@ import Conversation from "../models/Conversation.js";
 //new conv
 const router = express();
 router.post("/", async (req, res) => {
-  console.log(req.body);
   const newConversation = new Conversation({
     members: [req.body.senderId, req.body.receiverId],
   });

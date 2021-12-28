@@ -59,7 +59,7 @@ export default function Filters(props) {
                {
                    locally&&
                    (<div><input type='text' onKeyUp={(e)=>set_loc(e.target.value)} />
-                   <input style={{marginTop:'2rem'}}type="range" min="0" max="1000" onChange={e=>set_dis(e.target.value)}/></div>)
+                   <input style={{marginTop:'2rem'}}type="range" min="0" max="1000" onChange={e=>set_dis(e.target.value)}/>0-1000km</div>)
                }
 
                <div className="label" style={{padding:'4rem 0rem 0rem 0rem'}}><h3>Add Preferences </h3><span className="message">At max 5</span></div>

@@ -28,7 +28,6 @@ function ProfileTemp(props) {
   }
 
   const outOfFrame = async () => {
-      console.log(1);
      if(match)
      {
         props.set_a(props.name);

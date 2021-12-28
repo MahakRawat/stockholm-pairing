@@ -2,7 +2,7 @@ import express from "express";
 import bcrypt from 'bcrypt';
 import multer from 'multer';
 import userModel from "../models/userModel.js";
-import axios from 'axios';
+import Axios from 'axios';
 
 const upload= multer({dest:'./uploads'});
 const router = express();
@@ -11,7 +11,7 @@ router.get('/login',async (req,res)=>{
    if(req.query.email && req.query.password)
    {
        try{
-       user= await userModel.findByCredentials(req.query.email,req.query.password); 
+        user= await userModel.findByCredentials(req.query.email,req.query.password); 
        }
        catch(e)
        {
@@ -32,7 +32,7 @@ router.get('/login',async (req,res)=>{
    if(user)
      res.status(200).send(user);
    else
-     res.status(500).send();
+     res.status(200).send();
 })
 router.get('/profile',async (req,res)=>{
     const user= await userModel.findOne({_id:req.query.id});
@@ -139,7 +139,7 @@ router.patch('/rightSwipe',async (req,res)=>{
       try{
           await user1.save();
           await user2.save();
-          await axios.post(`http://127.0.0.1:4000/conversations`,{senderId:user1_id,receiverId:user2_id});
+          await Axios.post(`http://127.0.0.1:4000/conversations`,{senderId:user1_id,receiverId:user2_id});
           res.status(200).send({user:user1,matched:true});
       }
       catch(e)

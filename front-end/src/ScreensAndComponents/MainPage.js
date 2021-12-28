@@ -31,10 +31,11 @@ function MainPage(props) {
    }
    
    useEffect(() => {
+     console.log(1);
       Axios.get(`/users/search?gender=${data.gender}&preferred_gender=${data.preferred_gender}&id=${data._id}`)
      .then(res=>{setloading(false); setlist(res.data);})
      .catch(e=>console.log(e));   
-   },[data.gender,data.preferred_gender,data._id,data.visited])
+   },[])
     return (
         <div>
         { a?

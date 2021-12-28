@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import Profile from './ScreensAndComponents/Profile';
 function App() {
    const user=useSelector(state=>state);
-   console.log(user);
   return (
     <BrowserRouter>
     <main>
